@@ -1,5 +1,4 @@
 /* Appel de mutation direct */
-export default {
-    ADD_BRANCHES:'addBranches'
-    
+export default {    
+    SET_CONTACTS:'setContacts'
 };

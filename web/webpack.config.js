@@ -29,7 +29,11 @@ const conf = {
             {test: /\.css$/, exclude: /node_modules/, loader: 'css-loader'}
         ]
     },
-
+    devServer: {
+        proxy: {
+            "/api": "http://localhost:3000"
+        }
+    },
     plugins: [
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{from: './src/img', to: 'img'}]),
@@ -37,6 +41,13 @@ const conf = {
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(require("./package.json").version)
         }),
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                proxy: {
+                    "/api": "http://localhost:3000"
+                }
+            }
+          }),
         new Visualizer()
     ]
 };

@@ -3,6 +3,8 @@ import api from './api'
 export default {
     //TANK
     getTank: (qt, unit, _id) => api.get(`api/tank/${qt}/${unit}/${_id}`),
+    getContacts: () => api.get(`api/contacts`),
+
 
     //BRANCH
     getUnquantifiedBranches: (_id) => api.get(`api/branch/${_id}`),

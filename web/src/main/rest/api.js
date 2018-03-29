@@ -1,13 +1,7 @@
-import {baseUrl} from '../const/const';
 import req from 'request-promise-lite';
 
-const url = (path) => {
-    return baseUrl + path;
-};
-
-const options =  (body) => {
-    return {body: body, json: true};
-};
+const url = (path) => window.location.href + path;
+const options =  (body) => ({body: body, json: true});
 
 export default {
 

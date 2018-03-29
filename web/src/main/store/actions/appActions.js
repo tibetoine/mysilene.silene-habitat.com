@@ -1,12 +1,15 @@
 import On from "../../const/on";
+import Do from "../../const/do";
+import rest from "../../rest/routes";
+
 
 export default {
-    [On.MOUNT_APP]: async ({dispatch}) => {
-        //await dispatch(On.LOAD_OPEN_TREE, {_id: "e2e2e2e2e2e2e2e2e2e2e2e2"});
-        // await dispatch(On.LOAD_OPEN_COMPARE_TO, {_id: "222222222222222222222222"});
-    },
-    [On.EXCEPTION]: ({}, e) => {
-        console.error(e);
-        throw e;
+    [On.LOAD_CONTACTS]: async function({commit}) {
+       /*1/ Appel REST à l'API  */
+        const contacts = await rest.getContacts();
+
+       /*2/ Enregistrement dans le store */
+       commit(Do.SET_CONTACTS, contacts);
     }
+
 };
