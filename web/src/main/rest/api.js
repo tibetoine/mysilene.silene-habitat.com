@@ -1,11 +1,14 @@
 import req from 'request-promise-lite';
 
-const url = (path) => window.location.href + path;
+const url = (path) => window.location.origin + '/' + path;
 const options =  (body) => ({body: body, json: true});
 
 export default {
 
-    get: (path) => req.get(url(path), options()),
+    get: (path) => {
+        console.log("URL : " + url(path));
+        return req.get(url(path), options())
+    },
 
     post: (path, body) => req.post(url(path), options(body)),
 

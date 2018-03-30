@@ -24,20 +24,28 @@ const conf = {
 
     module: {
         rules: [
-            {test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader', options: {loaders: {js: 'babel-loader'}}},
-            {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-            {test: /\.css$/, exclude: /node_modules/, loader: 'css-loader'}
+            { test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader', options: { loaders: { js: 'babel-loader' } } },
+            { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+            { test: /\.css$/, exclude: /node_modules/, loader: 'css-loader' }
         ]
     },
     devServer: {
-        proxy: {
-            "/api": "http://localhost:3000"
-        }
+        proxy: 
+            {
+                "/shp-img": {
+                    target: "http://isidoor.silene-habitat.com",
+                    pathRewrite: { "^/shp-img": "" }
+                },
+             
+            
+                "/api": "http://localhost:3000"
+            }
+        
     },
     plugins: [
-        new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
-        new CopyWebpackPlugin([{from: './src/img', to: 'img'}]),
-        new CopyWebpackPlugin([{from: './src/css', to: 'css'}]),
+        new HtmlWebpackPlugin({ template: './src/main/index.html', inject: 'body', hash: 'true' }),
+        new CopyWebpackPlugin([{ from: './src/img', to: 'img' }]),
+        new CopyWebpackPlugin([{ from: './src/css', to: 'css' }]),
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(require("./package.json").version)
         }),
@@ -47,7 +55,7 @@ const conf = {
                     "/api": "http://localhost:3000"
                 }
             }
-          }),
+        }),
         new Visualizer()
     ]
 };
