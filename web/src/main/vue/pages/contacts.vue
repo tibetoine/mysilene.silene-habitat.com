@@ -1,7 +1,7 @@
 <template>
-  <v-content>
-    <v-container fluid fill-height>
-      <v-layout justify-center align-center>
+  <v-container>
+    <v-layout row>
+      <v-flex xs12 sm6 offset-sm3>
         <v-card>
           <!--<v-btn @click="ajoutContact"><v-icon>edit</v-icon></v-btn>-->
           <v-list two-line>
@@ -15,7 +15,7 @@
                   <v-list-tile-title v-html="contact.sn+' '+contact.givenName"></v-list-tile-title>
                   <v-list-tile-sub-title v-html="contact.title"></v-list-tile-sub-title>
                 </v-list-tile-content>
-                <v-list-tile-action>
+                <v-list-tile-action class="hidden-sm-and-down">
                   <v-icon :color="contact.mail ? 'teal' : 'grey'">email</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-action>
@@ -31,9 +31,9 @@
             </template>
           </v-list>
         </v-card>
-      </v-layout>
-    </v-container>
-  </v-content>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
