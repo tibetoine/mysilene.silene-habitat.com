@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" >
    
    
    
@@ -9,6 +9,7 @@
       :clipped="$vuetify.breakpoint.lgAndUp"
       app
       v-model="drawer"
+      :mini-variant.sync="mini"
     >
       <v-list dense>
         <template v-for="item in items">        
@@ -177,14 +178,16 @@
     },
     data: () => ({
       dialog: false,
-      drawer: null,
+      drawer: true,
       items: [
         { icon: 'art_track', text: 'News', path : "/news" },
         { icon: 'contacts', text: 'Contacts', path : "/contacts" },
         { icon: 'cloud', text: 'Météo', path : "/meteo" },
         { icon: 'help', text: 'Aide', path : "/help" }
         
-      ]
+      ],
+      mini: true,
+      right: null
     }),
     
     props: {
