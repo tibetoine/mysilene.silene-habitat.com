@@ -17,6 +17,10 @@ export default {
             if (state.contacts.search.toLowerCase() == "sst" && contact.silenesst == "1") {
                 isFiltered = true;
             }
+            
+            if (state.contacts.filterSst && contact.silenesst == "1") {
+                isFiltered = true;
+            }
             return isFiltered;
         });
     }

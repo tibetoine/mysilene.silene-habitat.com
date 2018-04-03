@@ -11,9 +11,6 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuetify);
 
-
-
-
 const app = new Vue({
     router,
     data: {
