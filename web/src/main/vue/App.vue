@@ -1,6 +1,5 @@
 <template>
-  <v-app id="inspire" >
-   
+  <v-app id="inspire" >  
    
    
    
@@ -9,7 +8,6 @@
       :clipped="$vuetify.breakpoint.lgAndUp"
       app
       v-model="drawer"
-      :mini-variant.sync="mini"
     >
       <v-list dense>
         <template v-for="item in items">        
@@ -50,8 +48,8 @@
         class="hidden-sm-and-down"
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>apps</v-icon>
+      <v-btn icon @click="showNewsFilterDialog" v-if="$route.path==='/news'">
+                <v-icon>settings</v-icon>
       </v-btn>
       <v-btn icon>
         <v-icon>notifications</v-icon>
@@ -148,50 +146,58 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <filter-news-dialog/>
+
   </v-app>
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex';
-  import On from "../const/on";
+    import {mapActions, mapMutations} from 'vuex';
+    import On from "../const/on";
+    import Do from "../const/do";
+    import FilterNewsDialog from "./dialogs/FilterNewsDialog";
 
-  export default {
-    computed: {
-      username () {
-        // Nous verrons ce que représente `params` dans un instant.
-        return this.$route.params.username
-      }
-    },
-    mounted: function() {
-      console.log("loadContacts");
-      this.loadContacts();
-    },     
-    methods: {
-      goBack () {
-          window.history.length > 1
-            ? this.$router.go(-1)
-            : this.$router.push('/')
-      },
-      ...mapActions({
-        loadContacts: On.LOAD_CONTACTS,
-      }),      
-    },
-    data: () => ({
-      dialog: false,
-      drawer: true,
-      items: [
-        { icon: 'art_track', text: 'News', path : "/news" },
-        { icon: 'contacts', text: 'Contacts', path : "/contacts" },
-        { icon: 'cloud', text: 'Météo', path : "/meteo" },
-        { icon: 'help', text: 'Aide', path : "/help" }
-        
-      ],
-      mini: true,
-      right: null
-    }),
-    
-    props: {
-      source: String
+    export default {
+        components: {FilterNewsDialog},
+        computed: {
+            username() {
+                // Nous verrons ce que représente `params` dans un instant.
+                return this.$route.params.username
+            }
+        },
+        mounted: function () {
+            this.loadContacts();
+            this.loadNews();
+        },
+        methods: {
+            goBack() {
+                window.history.length > 1
+                    ? this.$router.go(-1)
+                    : this.$router.push('/')
+            },
+            ...mapActions({
+                loadContacts: On.LOAD_CONTACTS,
+                loadNews: On.LOAD_NEWS,
+            }),
+            ...mapMutations({
+                showNewsFilterDialog:Do.SHOW_NEWS_FILTER_DIALOG
+            })
+        },
+        data: () => ({
+            dialog: false,
+            drawer: null,
+            items: [
+                {icon: 'art_track', text: 'News', path: "/news"},
+                {icon: 'contacts', text: 'Contacts', path: "/contacts"},
+                {icon: 'cloud', text: 'Météo', path: "/meteo"},
+                {icon: 'help', text: 'Aide', path: "/help"}
+
+            ]
+        }),
+
+        props: {
+            source: String
+        }
     }
-  }
 </script>

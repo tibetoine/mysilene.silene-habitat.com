@@ -29,7 +29,7 @@
             </v-layout>
           </v-container>
           <v-list two-line>
-            <template v-for="(contact, index) in filteredContacts">
+            <template v-for="(contact, index) in contacts">
               <v-divider  :key="index"></v-divider>
               <v-list-tile avatar  :key="contact._id" @click="">
                 <v-badge color="green" left v-if="contact.silenesst == '1'" overlap>
@@ -46,16 +46,20 @@
                   <v-list-tile-sub-title v-html="contact.title"></v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action class="hidden-xs-only">
-                  <v-icon :color="contact.mail ? 'blue' : 'grey'">email</v-icon>
+                  <a v-if="contact.mail" style="text-decoration:none;" v-bind:href="'mailto:' + contact.mail"><v-icon :color="contact.mail ? 'blue' : 'grey'" >email</v-icon></a>
+                  <v-icon v-else :color="contact.mail ? 'blue' : 'grey'" >email</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-action class="hidden-xs-only">
-                  <v-icon :color="contact.telephoneNumber ? 'blue' : 'grey'">phone</v-icon>
+                  <a v-if="contact.telephoneNumber"  style="text-decoration:none;" v-bind:href="'tel:' + contact.telephoneNumber"><v-icon :color="contact.telephoneNumber ? 'blue' : 'grey'">phone</v-icon></a>
+                  <v-icon v-else :color="contact.telephoneNumber ? 'blue' : 'grey'" >phone</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-action class="hidden-xs-only">
-                  <v-icon :color="contact.mobile ? 'blue' : 'grey'">chat</v-icon>
+                  <a v-if="contact.mobile" style="text-decoration:none;" v-bind:href="'sms:' + contact.mobile"><v-icon :color="contact.mobile ? 'blue' : 'grey'">chat</v-icon></a>
+                  <v-icon v-else :color="contact.mobile ? 'blue' : 'grey'">chat</v-icon></a>
                 </v-list-tile-action>
                 <v-list-tile-action class="hidden-xs-only">
-                  <v-icon :color="contact.mobile ? 'blue' : 'grey'">phonelink_ring</v-icon>
+                  <a v-if="contact.mobile" style="text-decoration:none;" v-bind:href="'tel:' + contact.mobile"><v-icon :color="contact.mobile ? 'blue' : 'grey'">phonelink_ring</v-icon></a>
+                  <v-icon v-else :color="contact.mobile ? 'blue' : 'grey'">phonelink_ring</v-icon>
                 </v-list-tile-action>
                 <v-menu class="hidden-sm-and-up" >
                   <v-btn icon slot="activator">
@@ -65,40 +69,48 @@
                     <!-- Mobile -->
                     <v-list-tile>
                       <v-list-tile-action>
-                        <v-icon :color="contact.mobile ? 'blue' : 'grey'">phonelink_ring</v-icon>
+                        <a v-if="contact.mobile" style="text-decoration:none;" v-bind:href="'tel:' + contact.mobile"><v-icon :color="contact.mobile ? 'blue' : 'grey'">phonelink_ring</v-icon></a>
+                  <v-icon v-else :color="contact.mobile ? 'blue' : 'grey'">phonelink_ring</v-icon>
                       </v-list-tile-action>
                       <v-list-tile-content>
-                        <v-list-tile-title>Mobile</v-list-tile-title>
+                        <a v-if="contact.mobile" style="text-decoration:none;" v-bind:href="'tel:' + contact.mobile"><v-list-tile-title>Mobile</v-list-tile-title></a>
+                        <v-list-tile-title v-else>Mobile</v-list-tile-title>
                       </v-list-tile-content>                      
                     </v-list-tile>
 
                     <!-- Phone -->
                     <v-list-tile>
                       <v-list-tile-action>
-                        <v-icon :color="contact.telephoneNumber ? 'blue' : 'grey'">phone</v-icon>
+                        <a v-if="contact.telephoneNumber"  style="text-decoration:none;" v-bind:href="'tel:' + contact.telephoneNumber"><v-icon :color="contact.telephoneNumber ? 'blue' : 'grey'">phone</v-icon></a>
+                  <v-icon v-else :color="contact.telephoneNumber ? 'blue' : 'grey'" >phone</v-icon>
                       </v-list-tile-action>
                       <v-list-tile-content>
-                        <v-list-tile-title>Fixe</v-list-tile-title>
+                        <a v-if="contact.telephoneNumber"  style="text-decoration:none;" v-bind:href="'tel:' + contact.telephoneNumber"><v-list-tile-title>Fixe</v-list-tile-title></a>
+                        <v-list-tile-title v-else>Fixe</v-list-tile-title>
                       </v-list-tile-content>                      
                     </v-list-tile>
 
                     <!-- SMS -->
                     <v-list-tile>
                       <v-list-tile-action>
-                        <v-icon :color="contact.mobile ? 'blue' : 'grey'">chat</v-icon>
+                        <a v-if="contact.mobile" style="text-decoration:none;" v-bind:href="'sms:' + contact.mobile"><v-icon :color="contact.mobile ? 'blue' : 'grey'">chat</v-icon></a>
+                  <v-icon v-else :color="contact.mobile ? 'blue' : 'grey'">chat</v-icon></a>
                       </v-list-tile-action>
                       <v-list-tile-content>
-                        <v-list-tile-title>SMS</v-list-tile-title>
+                        <a v-if="contact.mobile" style="text-decoration:none;" v-bind:href="'sms:' + contact.mobile"><v-list-tile-title>SMS</v-list-tile-title></a>
+                        <v-list-tile-title v-else>SMS</v-list-tile-title>
                       </v-list-tile-content>                      
                     </v-list-tile>
                     
                     <!-- Mail -->
                     <v-list-tile>
                       <v-list-tile-action>
-                        <v-icon :color="contact.mail ? 'blue' : 'grey'">mail</v-icon>
+                        <a v-if="contact.mail" style="text-decoration:none;" v-bind:href="'mailto:' + contact.mail"><v-icon :color="contact.mail ? 'blue' : 'grey'" >email</v-icon></a>
+                  <v-icon v-else :color="contact.mail ? 'blue' : 'grey'" >email</v-icon>
                       </v-list-tile-action>
                       <v-list-tile-content>
-                        <v-list-tile-title>Mail</v-list-tile-title>
+                        <a v-if="contact.mail" style="text-decoration:none;" v-bind:href="'mailto:' + contact.mail"><v-list-tile-title>Mail</v-list-tile-title></a>
+                        <v-list-tile-title v-else>Mail</v-list-tile-title>
                       </v-list-tile-content>                      
                     </v-list-tile>
 
@@ -115,13 +127,12 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import On from "../../const/on";
 
 export default {
   name: "contacts",
   data: () => ({
-    search: "",
     items: [
       { icon: "email", title: "Mail" },
       { icon: "phone", title: "Phone" },
@@ -130,28 +141,18 @@ export default {
     ]
   }),
   computed: {
-    ...mapState(["contacts"]),
-    filteredContacts() {
-      return this.$store.state.contacts;
-    }
-    /*filteredContacts() {
-      return this.$store.state.contacts.filter(contact => {
-        var isFiltered = false;
-        isFiltered =
-          isFiltered ||
-          contact.sn.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-        if (contact.givenName != null) {
-          isFiltered =
-            isFiltered ||
-            contact.givenName.toLowerCase().indexOf(this.search.toLowerCase()) >
-              -1;
+    ...mapState({
+      search: state => state.contacts.search,
+    }),
+    ...mapGetters({contacts: 'filteredContacts'}),
+    search: {
+        get: function () {
+            return this.$store.state.contacts.search
+        },
+        set: function (value) {
+            this.$store.state.contacts.search = value;
         }
-        if (this.search.toLowerCase() == "sst" && contact.silenesst == "1") {
-          isFiltered = true;
-        }
-        return isFiltered;
-      });
-    }*/
+    },
   },
   methods: {
     imgsrc: contact =>
