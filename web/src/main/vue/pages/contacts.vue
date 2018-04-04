@@ -2,10 +2,7 @@
   <v-container style="margin-top:50px;">
     <v-layout row>
       <v-flex xs12 md9 offset-md3>
-        
         <v-card>
-          <!--<v-btn @click="ajoutContact"><v-icon>edit</v-icon></v-btn>-->
-          <!--<input type="text" v-model="search">-->
           <v-container fluid>
             <v-layout row>
               <v-flex xs12 sm8>
