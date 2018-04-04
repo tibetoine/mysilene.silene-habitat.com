@@ -3,7 +3,7 @@ import api from './api'
 export default {
     //TANK
     getContacts: () => api.get(`api/contacts`),
-    getNews: () => getFakeNews()
+    getNews: () => api.get(`api/news`)
 }
 
 const getFakeNews = async () => ([

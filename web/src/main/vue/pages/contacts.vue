@@ -2,6 +2,7 @@
   <v-container style="margin-top:50px;">
     <v-layout row>
       <v-flex xs12 md9 offset-md3>
+        
         <v-card>
           <!--<v-btn @click="ajoutContact"><v-icon>edit</v-icon></v-btn>-->
           <!--<input type="text" v-model="search">-->
@@ -163,16 +164,24 @@ export default {
         }
     }
   },
+  created: function(){
+    console.log('vue created: ' + this);
+  },
+  mounted: function(){
+    console.log('vue mounted: ' + this);
+  },
   methods: {
     imgsrc: contact =>
       "/img/ad-photos/" +
       (contact.thumbnailPhoto ? contact.sAMAccountName : "default") +
       ".jpg",
-    doFilterSst:any => {
+    doFilterSst() {
       //console.log("Test doFilter")
       //TODO à compléter
       //this.filterSst?this.filsterSst=false:this.filterSst=true;
-      search = ""
+      this.search = "";
+      this.filterSst=true;
+      
     },
     goToContact: function(contact, contactId) {
       console.log("Contact : " + contact + " contactId : " + contactId);

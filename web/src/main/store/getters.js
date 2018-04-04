@@ -5,22 +5,30 @@ export default {
     filteredContacts: state => {
         return state.contacts.fullList.filter(contact => {
             var isFiltered = false;
-            isFiltered =
-                isFiltered ||
-                contact.sn.toLowerCase().indexOf(state.contacts.search.toLowerCase()) > -1;
-            if (contact.givenName != null) {
+            if ((state.contacts.search == "" || state.contacts.search == null) && !state.contacts.filterSst){
+                /* On ne filtre pas dans ce cas là */
+                return true;
+            }
+            if (state.contacts.search != "" && state.contacts.search != null){
                 isFiltered =
                     isFiltered ||
-                    contact.givenName.toLowerCase().indexOf(state.contacts.search.toLowerCase()) >
-                    -1;
+                    contact.sn.toLowerCase().indexOf(state.contacts.search.toLowerCase()) > -1;
+                if (contact.givenName != null) {
+                    isFiltered =
+                        isFiltered ||
+                        contact.givenName.toLowerCase().indexOf(state.contacts.search.toLowerCase()) >
+                        -1;
+                }
+                if (state.contacts.search.toLowerCase() == "sst" && contact.silenesst == "1") {
+                    isFiltered = true;
+                }
+            } else {
+                //console.log("state.contacts.filterSst : " + state.contacts.filterSst);
+                if (state.contacts.filterSst && contact.silenesst == "1") {
+                    isFiltered = true;
+                }
             }
-            if (state.contacts.search.toLowerCase() == "sst" && contact.silenesst == "1") {
-                isFiltered = true;
-            }
-            
-            if (state.contacts.filterSst && contact.silenesst == "1") {
-                isFiltered = true;
-            }
+            //console.log("isFiltered : " + isFiltered);
             return isFiltered;
         });
     }
