@@ -11,13 +11,16 @@ export default {
             value: "actualites",
             label: "Actualités"
         }, {
-            value: "flashInfos",
+            value: "flashInfo",
             label: "Flash infos"
+        }, {
+            value: "mouvementsRH",
+            label: "Mouvements RH"
         }, {
             value: "facebook",
             label: "Facebook"
         }],
-        selectedTypes: ["actualites", "flashInfos", "facebook"],
+        selectedTypes: ["actualites", "flashInfo", "facebook", "mouvementsRH"],
         fullList: []
     }
 };

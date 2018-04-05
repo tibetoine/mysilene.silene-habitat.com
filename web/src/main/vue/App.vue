@@ -49,7 +49,7 @@
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn icon @click="showNewsFilterDialog" v-if="$route.path==='/news'">
-                <v-icon>settings</v-icon>
+        <v-icon>settings</v-icon>
       </v-btn>
       <v-btn icon>
         <v-icon>notifications</v-icon>
