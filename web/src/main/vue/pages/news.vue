@@ -4,8 +4,8 @@
             <v-layout row>
                 <v-flex xs12 md9>
                     <v-list two-line>
-                        <template v-for="(aNews, index) in news">
-                            <v-card style="margin:20px 10px 20px 10px;">
+                        <template v-for="aNews in news">
+                            <v-card style="margin:20px 10px 20px 10px;" v-bind:key="aNews._id">
                                 <v-card-title>
                                     <v-avatar
                                 size="36px"
@@ -85,16 +85,12 @@ export default {
       return imgSource;
     },
     findAvatar: function(author) {
-      //console.log("Author : " + author);
       var contact = this.$store.getters.searchContact(author);
       if (contact == null) return "/img/ad-photos/default.jpg";
-      //console.dir("contact : " + contact);
-      console.log("contact : " + contact + " contact.thumbnailPhoto :  " + contact.thumbnailPhoto + " contact.givenName " + contact.givenName) ;
 
       var imgSource = "/img/ad-photos/" +
         (contact.thumbnailPhoto ? contact.sAMAccountName : "default") +
         ".jpg"
-        console.log("imgSource : " + imgSource);
       return imgSource
         
     }

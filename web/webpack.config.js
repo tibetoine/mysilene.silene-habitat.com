@@ -32,10 +32,10 @@ const conf = {
     devServer: {
         proxy: 
             {
-                "/shp-img": {
+                "/shp_img2": {
                     target: "http://isidoor.silene-habitat.com",
-                    pathRewrite: { "^/shp-img": "" }
-                },
+                    pathRewrite: { "^/shp_img2": "" }
+                },"/shp_img": "http://isidoor.silene-habitat.com",
              
             
                 "/api": "http://localhost:3000"
