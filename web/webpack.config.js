@@ -32,13 +32,11 @@ const conf = {
     devServer: {
         proxy: 
             {
-                "/shp_img2": {
+                "/shp_img": {
                     target: "http://isidoor.silene-habitat.com",
-                    pathRewrite: { "^/shp_img2": "" }
-                },"/shp_img": "http://isidoor.silene-habitat.com",
-             
-            
-                "/api": "http://localhost:3000"
+                    pathRewrite: { "^/shp_img": "" },
+                    changeOrigin: true
+                },"/api": "http://localhost:3000"
             }
         
     },
@@ -48,13 +46,6 @@ const conf = {
         new CopyWebpackPlugin([{ from: './src/css', to: 'css' }]),
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(require("./package.json").version)
-        }),
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                proxy: {
-                    "/api": "http://localhost:3000"
-                }
-            }
         }),
         new Visualizer()
     ]

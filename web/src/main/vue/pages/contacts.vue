@@ -17,7 +17,7 @@
               <v-flex xs12 sm4>
                 <v-btn
                   @click="doFilterSst"
-                  color="green"
+                  :color="filterSst?'green':'grey'"
                   class="white--text"
                 >
                   SST
@@ -160,25 +160,16 @@ export default {
             this.$store.state.selectedContact = value;
         }
     }
-  },
-  created: function(){
-    console.log('vue created: ' + this);
-  },
-  mounted: function(){
-    console.log('vue mounted: ' + this);
-  },
+  },  
   methods: {
     imgsrc: contact =>
       "/img/ad-photos/" +
       (contact.thumbnailPhoto ? contact.sAMAccountName : "default") +
       ".jpg",
     doFilterSst() {
-      //console.log("Test doFilter")
-      //TODO à compléter
-      //this.filterSst?this.filsterSst=false:this.filterSst=true;
       this.search = "";
-      this.filterSst=true;
-      
+      this.filterSst?this.filterSst=false:this.filterSst=true;
+
     },
     goToContact: function(contact, contactId) {
       console.log("Contact : " + contact + " contactId : " + contactId);

@@ -63,7 +63,7 @@ export default {
         } else {
             prenom = prenomResults[0] + ' ' + prenomResults[1];
         }
-        console.log("Recherche de contact ");
+        //console.log("Recherche de contact ");
         return state.contacts.fullList.find(function (contact) {
             //console.log("Recherche de contact avec prenom " + prenom + " et nom " + nomDeFamille);
             if ((contact.givenName === prenom) && (contact.sn === nomDeFamille)) {
