@@ -22,10 +22,19 @@
         class="black--text"
         height="200px"
         :src="imgsrc(news)"
-        style="border:1px solid red;"
         >
         </v-card-media>
-        <v-card-title primary-title v-html="selectedNews.content">
+        <v-card-title>
+            <div>
+                <span class="headline" :style="'color:'+getFontColor(news)+';'">{{news.title}}</span>
+            </div>
+        </v-card-title>
+        <v-card-title :color="getColor(news)" style="padding-top:0px;">
+            <div>
+                <span class="subheading" :color="getColor(news)">{{news.resume}}</span>
+            </div>
+        </v-card-title>
+        <v-card-title primary-title v-html="news.content">
           
           
         </v-card-title>        
