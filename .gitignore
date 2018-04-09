@@ -5,6 +5,7 @@ dist/
 tmp/
 out-tsc/
 node_modules/
+web/dist/stats.html
 
 
 # dependencies
