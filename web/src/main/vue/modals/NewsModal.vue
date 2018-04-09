@@ -1,25 +1,37 @@
 <template>
-    <div class="news" style="margin-top:50px;">
-        <div class="loading" v-if="loading">
-        Chargement...
-        </div>
-
-        <div v-if="error" class="error">
-        {{ error }}
-        </div>
-
-        <div v-if="selectedNews" class="content">
-            <v-layout row>
-                <v-flex xs12 sm6 offset-sm3>
-                <v-card>                    
-                    <v-list-tile >
-                        <div v-html="selectedNews.content"></div>
-                    </v-list-tile>
-                </v-card>
-                </v-flex>
-            </v-layout>
-        </div>
-    </div>
+  <v-layout style="margin-top:50px;">
+    <v-flex xs12 sm6 offset-sm3>
+      <v-card>
+        <v-card-title>
+          <v-avatar
+          size="36px"
+          slot="activator"
+          >
+            <img
+                :src="findAvatar(news.author)"
+                alt=""                                        
+            >
+            
+        </v-avatar>
+        <span :title="news.author" style="padding-left:10px;">{{news.author?chrinkAuthor(news.author):'Auteur Inconnu'}}</span>
+            <!-- Photo Author --> 
+            <!-- Author --> 
+            <!-- Photo Author --> 
+        </v-card-title>
+        <v-card-media
+        class="black--text"
+        height="200px"
+        :src="imgsrc(news)"
+        style="border:1px solid red;"
+        >
+        </v-card-media>
+        <v-card-title primary-title v-html="selectedNews.content">
+          
+          
+        </v-card-title>        
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -30,7 +42,7 @@ export default {
   data() {
     return {
       loading: false,
-      error: null
+      error: null, news : null
     };
   },
   computed: {
@@ -54,30 +66,163 @@ export default {
     this.fetchData();
   },
   methods: {
-    imgsrc: news =>
-      "/img/ad-photos/" +
-      (news.thumbnailPhoto ? news.sAMAccountName : "default") +
-      ".jpg",
     fetchData() {
-      console.log("--> Fetching data");
+      console.log("--> Fetching data News");
       this.error = this.news = null;
       this.loading = true;
       if (this.$store.state.selectedNews != null) {
         this.news = this.$store.state.selectedNews;
         this.loading = false;
       } else {
-        this.error = "Impossible de charger le news";
+        this.error = "Impossible de charger la news";
         console.error("MySilene : Can not load news !");
       }
     },
-    sendMail(mail) {
-        window.location = "mailto:"+mail;
+    chrinkAuthor: author => {
+      if (author.length > 19) {
+        return author.substring(0, 19) + "...";
+      } else {
+        return author;
+      }
     },
-    callBryan(mobile) {
-        window.location = "tel:"+mobile;
+    getDay: news => new Date(news.date).getDate(),
+    getMonth: news => {
+      var monthNames = [
+        "JAN",
+        "FEV",
+        "MAR",
+        "AVR",
+        "MAI",
+        "JUIN",
+        "JUIL",
+        "AOU",
+        "SEP",
+        "OCT",
+        "NOV",
+        "DEC"
+      ];
+
+      return monthNames[new Date(news.date).getMonth()];
     },
-    textBryan(mobile) {
-        window.location = "sms:"+mobile;
+    getColor: news => {
+      var color = "teal";
+      switch (news.type) {
+        case "flashInfo":
+          color = "orange darken-3";
+          break;
+        case "facebook":
+          color = "red darken-2";
+          break;
+        case "mouvementsRH":
+          color = "indigo darken-2";
+          break;
+        case "actualites":
+          color = "blue darken-2";
+
+          break;
+
+        default:
+          break;
+      }
+      return color;
+    },
+    getTypeLabel: news => {
+      var label = "Type Inconnu";
+      switch (news.type) {
+        case "flashInfo":
+          label = "Flash Info";
+          break;
+        case "facebook":
+          label = "Facebook";
+          break;
+        case "mouvementsRH":
+          label = "Mouvement RH";
+          break;
+        case "actualites":
+          label = "Actualité";
+
+          break;
+
+        default:
+          break;
+      }
+      return label;
+    },
+    getFontColor: news => {
+      var color = "#009688"; //teal
+      switch (news.type) {
+        case "flashInfo":
+          color = "#ef6c00"; //orange darken-3
+          break;
+        case "facebook":
+          color = "#d32f2f"; //red darken-2
+          break;
+        case "mouvementsRH":
+          color = "#303f9f "; //indigo darken-2
+          break;
+        case "actualites":
+          color = "#1976d2 "; //blue darken-2
+
+          break;
+
+        default:
+          break;
+      }
+      return color;
+    },
+    getIcon: news => {
+      var icon = "perm_device_information";
+      switch (news.type) {
+        case "flashInfo":
+          icon = "flash_on";
+          break;
+        case "actualites":
+          icon = "perm_device_information";
+          break;
+        case "mouvementsRH":
+          icon = "account_box";
+          break;
+        case "facebook":
+          icon = "public";
+
+          break;
+
+        default:
+          break;
+      }
+      return icon;
+    },
+    imgsrc: news => {
+      var imgSource = "/img/flashInfo-1.jpeg";
+      if (news.image != null && news.image != "") {
+        imgSource = news.image;
+      } else {
+        switch (news.type) {
+          case "flashInfo":
+            imgSource = "/img/flashInfo-2.jpeg";
+            break;
+          case "actualites":
+            imgSource = news.image;
+            break;
+          case "mouvementsRH":
+            imgSource = news.image;
+            break;
+          default:
+            break;
+        }
+      }
+      return imgSource;
+    },
+    findAvatar: function(author) {
+      if (author == null || author == "") return "/img/ad-photos/default.jpg";
+      var contact = this.$store.getters.searchContact(author);
+      if (contact == null) return "/img/ad-photos/default.jpg";
+
+      var imgSource =
+        "/img/ad-photos/" +
+        (contact.thumbnailPhoto ? contact.sAMAccountName : "default") +
+        ".jpg";
+      return imgSource;
     }
   }
 };
