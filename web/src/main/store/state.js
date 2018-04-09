@@ -1,5 +1,6 @@
 export default {
     selectedContact : null,
+    selectedNew : null,
     contacts: {
         search : "",
         filterSst : false,

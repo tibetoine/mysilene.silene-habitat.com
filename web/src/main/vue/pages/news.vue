@@ -67,7 +67,7 @@
                                     </div>
                                 </v-card-title>
                                 <v-card-actions>
-                                    <v-btn flat color="blue">Lire la suite > </v-btn>
+                                    <v-btn flat color="blue" @click="goToNews(aNews, aNews._id)">Lire la suite > </v-btn>
                                 </v-card-actions>
                             </v-card>
                         </template>
@@ -85,9 +85,27 @@ import On from "../../const/on";
 export default {
   name: "news",
   computed: {
-    ...mapGetters({ news: "filteredNews" })
+    ...mapState({
+      selectedNews: state => state.selectedNews
+    }),
+    ...mapGetters({ news: "filteredNews" }),
+    selectedNews: {
+        get: function () {
+            return this.$store.state.selectedNews
+        },
+        set: function (value) {
+            this.$store.state.selectedNews = value;
+        }
+    }
   },
   methods: {
+    goToNews: function(news, newsId) {
+      console.log("News : " + news + " newsId : " + newsId);
+      this.$store.state.selectedNews = news;
+      //this.$router.push({ path: 'newsModal', params: { newsId }})
+      //this.$router.push({ name: 'newsModal', params: { newsId }})
+      this.$router.push({ path: `/news/${newsId}` })
+    },
     chrinkAuthor: author => {
       if (author.length > 19) {
         return author.substring(0, 19) + "...";
